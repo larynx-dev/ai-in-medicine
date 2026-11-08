@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Every Second Counts — AI in Healthcare &amp; Emergency Response</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ LOADER ============ -->
+<div id="loader">
+  <div class="ld">
+    <div class="seq" id="ldSeq">ATGCGTACCTGA</div>
+    <div>SEQUENCING PRESENTATION GENOME</div>
+    <div class="bar"><i id="ldBar"></i></div>
+    <div class="pct" id="ldPct">0%</div>
+  </div>
+</div>
+
+<!-- ============ BACKGROUND LAYERS ============ -->
+<div class="bg"></div>
+<div class="bg-glow"></div>
+<canvas id="gl"></canvas>
+<div class="grid-ov"></div>
+<div class="vignette"></div>
+<div class="grain"></div>
+<div class="sweep" id="sweep"></div>
+
+<!-- ============ HUD ============ -->
+<header class="hud-top">
+  <div class="brand">
+    <svg viewBox="0 0 68 24" aria-hidden="true"><path class="pulse-path" d="M0 12h18l4-8 6 16 5-12 3 4h32" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+    <span>Every Second Counts</span>
+  </div>
+  <div class="hud-right">
+    <span class="hint">← → navigate · S notes · F fullscreen</span>
+    <span class="rec"><i></i><span id="clock">T+00:00</span></span>
+  </div>
+</header>
+
+<footer class="hud-bottom">
+  <div class="counter"><span class="cur" id="cur">01</span><span class="tot">/ <span id="tot">10</span></span></div>
+  <nav class="progress" id="progress" aria-label="Slides"></nav>
+  <div class="nav">
+    <button id="prev" aria-label="Previous slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+    <button id="next" aria-label="Next slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+  </div>
+</footer>
+
+<aside id="notes" aria-label="Speaker notes">
+  <div class="lbl">Speaker notes</div>
+  <div id="notesBody"></div>
+  <div class="lbl dim">Press S to close</div>
+</aside>
+
+<!-- ============ DECK ============ -->
+<main id="deck">
+
+<!-- 1 · HOOK -->
+<section class="slide" data-title="Where are you?" data-scene="hook">
+  <div class="content">
+    <p class="kicker rv"><span class="bar"></span>AI in Healthcare &amp; Emergency Response</p>
+    <h1 class="h">
+      <span class="ln"><span data-scramble>Where are</span></span>
+      <span class="ln"><span data-scramble>you right</span></span>
+      <span class="ln acc"><span data-scramble>now?</span></span>
+    </h1>
+    <p class="lead rv">Someone collapses on the street. They aren’t moving. There are no clear street signs, no obvious landmarks, and you don’t know the address. <b>Every minute lost finding a victim directly impacts their survival.</b></p>
+  </div>
+  <div class="side">
+    <div class="card hud call rv">
+      <div class="call-head">
+        <span class="live"><i></i>Emergency call · live</span>
+        <span class="call-timer" id="callTimer">00:00</span>
+      </div>
+      <div class="bubbles">
+        <div class="bub op" data-text="Emergency services. Where are you right now?"><span class="who">Operator</span><span class="txt"></span></div>
+        <div class="bub me" data-text="I… I don’t know. There are no street signs. No landmarks."><span class="who">You</span><span class="txt"></span></div>
+        <div class="bub me" data-strike="1" data-text="Hold on, let me open Telegram and send you a location drop—"><span class="who">You</span><span class="txt"></span></div>
+        <div class="bub sys" data-text="✕ That won’t work in a high-stress emergency. Every minute lost matters."><span class="txt"></span></div>
+      </div>
+    </div>
+  </div>
+  <div class="notes" hidden><p>Good morning, everyone.</p><p>Imagine you’re walking down the street, and suddenly you see someone collapse on the ground. They aren’t moving. You quickly pull out your phone and call emergency services for an ambulance. The operator answers and asks, “Where are you right now?”</p><p>You look around. There are no clear street signs, no obvious landmarks, and you have no idea what the exact address is. What do you do? Tell the operator, “Hold on, let me open Telegram and send you a location drop”? No, obviously that won’t work in a high-stress emergency.</p><p>Every single minute lost trying to figure out where a victim is directly impacts their survival.</p></div>
+</section>
+
+<!-- 2 · GEOLOCATION -->
+<section class="slide" data-title="AI finds the location" data-scene="geo">
+  <div class="content">
+    <p class="kicker rv"><span class="bar"></span>02 — AI &amp; Location Data</p>
+    <h2 class="h md">
+      <span class="ln"><span data-scramble>Less explaining.</span></span>
+      <span class="ln acc"><span data-scramble>Faster help.</span></span>
+    </h2>
+    <div class="steps">
+      <div class="step rv"><span class="n">01</span><div><h4>Emergency call received</h4><p>The caller doesn’t know the exact address.</p></div><span class="st">Standby</span></div>
+      <div class="step rv"><span class="n">02</span><div><h4>AI processes location data</h4><p>The system works out where the call is coming from.</p></div><span class="st">Standby</span></div>
+      <div class="step rv"><span class="n">03</span><div><h4>Precise map coordinates</h4><p>An exact position replaces long explanations.</p></div><span class="st">Standby</span></div>
+      <div class="step rv"><span class="n">04</span><div><h4>Sent to the ambulance driver</h4><p>Help heads straight to where it’s needed.</p></div><span class="st">Standby</span></div>
+    </div>
+    <p class="foot-quote rv">And this isn’t just about ambulances. It’s a massive transformation in how healthcare works.</p>
+  </div>
+  <div class="readout card hud rv">
+    <div class="ro-head"><span class="lbl">Caller location</span><span class="lock" id="lockBadge">Searching</span></div>
+    <div class="ro-row"><span>NETWORK</span><b id="roNet">0 / 3 towers linked</b></div>
+    <div class="ro-row"><span>RANGE</span><b id="roRange">T1 ---m · T2 ---m · T3 ---m</b></div>
+    <div class="ro-row"><span>GRID POS</span><b id="roPos">x ----- · y -----</b></div>
+    <div class="ro-row"><span>SOURCE</span><b>NETWORK DATA · AI</b></div>
+    <div class="ro-row"><span>UNIT</span><b id="roUnit">—</b></div>
+  </div>
+  <div class="notes" hidden><p>But with modern Artificial Intelligence, we can fix this. AI tools can help process location data and send precise map coordinates to ambulance drivers, reducing the time spent explaining where help is needed.</p><p>And this isn’t just about ambulances. It’s about a massive transformation in how healthcare works.</p><p>Next, let’s look at the challenges doctors face.</p><p class="handoff">→ Hand over to the next speaker</p></div>
+</section>
+
+<!-- 3 · OVERLOAD -->
+<section class="slide" data-title="Cognitive overload" data-scene="overload">
+  <div class="content">
+    <p class="kicker rv"><span class="bar"></span>03 — The Core Crisis</p>
+    <h2 class="h md">
+      <span class="ln"><span data-scramble>Cognitive</span></span>
+      <span class="ln acc"><span data-scramble>overload.</span></span>
+    </h2>
+    <p class="lead rv">Doctors aren’t struggling because they lack medical knowledge. <b>They’re overwhelmed by paperwork and data.</b></p>
+    <div class="burden rv">
+      <span class="lbl">A large part of the workday goes to</span>
+      <div class="burden-row">
+        <span class="bchip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>Computer screens</span>
+        <span class="bchip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 10h.01M10 10h.01M14 10h.01M18 10h.01M7 14h10"/></svg>Typing notes</span>
+        <span class="bchip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg>Administrative forms</span>
+      </div>
+    </div>
+    <div class="card hud qcard rv">
+      <div class="qc-icons">
+        <span class="qi warn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M7 14h10"/></svg></span>
+        <svg class="qc-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        <span class="qi ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M6 9a6 6 0 1 1 12 0c0 3-2 4-3 5.5S14 18 12 19a3 3 0 0 1-3-3"/><path d="M9.5 9.5a2.5 2.5 0 0 1 5 0"/></svg></span>
+      </div>
+      <p>Every minute spent typing is a minute they could spend <b>listening to a patient.</b></p>
+    </div>
+  </div>
+  <figure class="fig rv">
+    <img src="assets/doctor-tired.webp" alt="Exhausted doctor at a computer">
+    <figcaption>Paperwork and data overload</figcaption>
+  </figure>
+  <div class="notes" hidden><p>Right now, healthcare is facing a huge issue: cognitive overload.</p><p>Doctors aren’t struggling because they lack medical knowledge. They’re overwhelmed by paperwork and data. They spend a large part of their workday staring at computer screens, typing notes, and completing administrative forms.</p><p>Every minute spent typing is a minute they could spend listening to a patient.</p></div>
+</section>
+
+<!-- 4 · SCANS -->
+<section class="slide" data-title="Fatigue & missed signs" data-scene="scans">
+  <div class="content">
+    <p class="kicker rv"><span class="bar"></span>04 — Human Limits</p>
+    <h2 class="h md">
+      <span class="ln acc"><span data-scramble>Many scans,</span></span>
+      <span class="ln"><span data-scramble>one long shift.</span></span>
+    </h2>
+    <p class="lead rv">When a radiologist reviews many complex scans during a long shift, mental fatigue can set in. <b>Small signs of disease can be overlooked, because human eyes and brains need rest.</b></p>
+    <div class="shift card hud rv">
+      <div class="shift-head">
+        <div><span class="lbl">Shift clock</span><b id="shiftClock">00:00</b></div>
+        <div><span class="lbl">Scans reviewed</span><b id="shiftCount">00</b></div>
+        <div class="focus"><span class="lbl">Focus</span><div class="meter"><i id="focusFill"></i></div></div>
+      </div>
+      <div class="tiles" id="tiles"></div>
+      <div class="tags"><span class="lbl">Easily overlooked</span><span class="tag">Small signs of disease</span></div>
+    </div>
+    <p class="foot-quote rv">This creates a need for additional support.</p>
+  </div>
+  <div class="notes" hidden><p>When a radiologist has to review many complex scans during a long shift, mental fatigue can set in. Small signs of disease can be overlooked because human eyes and brains need rest.</p><p>This creates a need for additional support.</p></div>
+</section>
+
+<!-- 5 · CO-PILOT -->
+<section class="slide" data-title="Clinical co-pilot" data-scene="copilot">
+  <div class="content">
+    <p class="kicker rv"><span class="bar"></span>05 — The Solution</p>
+    <h2 class="h md">
+      <span class="ln"><span data-scramble>Clinical</span></span>
+      <span class="ln acc"><span data-scramble>co-pilot.</span></span>
+    </h2>
+    <div class="switch rv" id="pilotSwitch"><i class="knob"></i><span class="a">Autopilot</span><span class="b">Co-pilot</span></div>
+    <p class="lead rv">Notice that we say co-pilot, not autopilot. <b>We aren’t replacing human judgment.</b></p>
+    <div class="duo">
+      <div class="card hud rv">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="7" r="3.5"/><path d="M5 21a7 7 0 0 1 14 0"/><path d="M12 14v4M10 16h4"/></svg></div>
+        <h4>The doctor</h4>
+        <p>Understands the patient’s situation and <b>makes the final decision.</b></p>
+      </div>
+      <div class="card hud rv">
+        <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="5" y="5" width="14" height="14" rx="3"/><path d="M9 9h6v6H9zM9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg></div>
+        <h4>The AI</h4>
+        <p>An extra layer of support: <b>organizes information</b> and <b>highlights areas that need attention.</b></p>
+      </div>
+    </div>
+  </div>
+  <div class="notes" hidden><p>This is where AI acts as a Clinical Co-Pilot.</p><p>Notice that we say Co-Pilot, not Autopilot. We aren’t replacing human judgment. The doctor remains responsible for understanding the patient’s situation and making the final decision.</p><p>AI provides an extra layer of support by organizing information and highlighting areas that need attention.</p><p>Next, let’s see how this works in practice.</p><p class="handoff">→ Hand over to the next speaker</p></div>
+</section>
+
+<!-- 6 · TWO EXAMPLES -->
+<section class="slide" data-title="AI in practice" data-scene="practice">
+  <div class="two">
+    <div class="content">
+      <p class="kicker rv"><span class="bar"></span>06 — In Practice</p>
+      <h2 class="h md">
+        <span class="ln"><span data-scramble>Two real</span></span>
+        <span class="ln acc"><span data-scramble>examples.</span></span>
+      </h2>
+      <ol class="ex-list">
+        <li class="rv"><span class="exn">01</span><div><h4>Diagnostic assistance</h4><p>AI highlights suspicious areas on an uploaded scan for the doctor to review, and helps prioritize urgent cases.</p></div></li>
+        <li class="rv"><span class="exn">02</span><div><h4>Ambient scribing</h4><p>AI turns the doctor–patient conversation into draft clinical notes. <b>The doctor checks and approves them.</b></p></div></li>
+      </ol>
+      <p class="foot-quote rv">Less typing. More time to focus on patients.</p>
+    </div>
+    <div class="demo">
+      <div class="card hud panel rv">
+        <div class="panel-head"><span class="lbl">01 · Scan review queue</span><span class="lbl acc-t" id="mriState">Scanning</span></div>
+        <div class="diag-grid">
+          <figure class="mri" id="mri">
+            <div class="mri-img">
+              <img src="assets/mri.webp" alt="Brain MRI scan">
+              <i class="scanline"></i>
+              <i class="box"><span>Review first</span></i>
+            </div>
+          </figure>
+          <div>
+            <div class="queue" id="queue">
+              <div class="q" data-id="a"><span class="mod">MRI · 2041</span><span class="pill">Queued</span></div>
+              <div class="q" data-id="b"><span class="mod">CT · 2042</span><span class="pill">Queued</span></div>
+              <div class="q" data-id="c" data-urgent="1"><span class="mod">MRI · 2043</span><span class="pill">Queued</span></div>
+            </div>
+            <p class="q-status" id="qStatus">Analysing…</p>
+          </div>
+        </div>
+      </div>
+      <div class="card hud panel rv">
+        <div class="panel-head"><span class="lbl">02 · Consultation → draft note</span><span class="listen"><i></i><i></i><i></i><i></i><i></i>Listening</span></div>
+        <div class="convo">
+          <div class="cl dr" data-text="What brings you in today?"><b>Dr</b><span class="txt"></span></div>
+          <div class="cl pt" data-text="Chest tightness for three days, mostly on the stairs." data-fill="cc,dur"><b>Pt</b><span class="txt"></span></div>
+        </div>
+        <div class="note-row"><span class="k">Complaint</span><span class="v" data-k="cc" data-v="Exertional chest tightness"></span></div>
+        <div class="note-row"><span class="k">Duration</span><span class="v" data-k="dur" data-v="3 days"></span></div>
+        <button class="approve" id="approve"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Doctor approves</span></button>
+      </div>
+    </div>
+  </div>
+  <div class="notes" hidden><p>Let’s look at two examples.</p><p>First, diagnostic assistance. When a medical scan is uploaded, AI can help highlight suspicious areas for a doctor to review. It can also help prioritize urgent cases.</p><p>Second, ambient scribing. AI can help turn a conversation between a doctor and a patient into draft clinical notes. The doctor then checks and approves them.</p><p>This can reduce typing time and give doctors more time to focus on their patients.</p></div>
+</section>
+
+<!-- 7 · CALCULATOR -->
+<section class="slide" data-title="Will AI replace doctors?" data-scene="history">
+  <div class="two">
+    <div class="content">
+      <p class="kicker rv"><span class="bar"></span>07 — A Lesson from History</p>
+      <h2 class="h md">
+        <span class="ln"><span data-scramble>Will AI replace</span></span>
+        <span class="ln acc"><span data-scramble>doctors?</span></span>
+      </h2>
+      <p class="lead rv">Whenever new technology arrives, people worry about their jobs. History gives us some useful examples.</p>
+      <div class="card hud parallel rv">
+        <span class="lbl">The same idea applies to healthcare</span>
+        <p>Automating routine tasks can give doctors <b>more time for careful decisions and personal care.</b></p>
+      </div>
+    </div>
+    <div class="stage rv">
+      <article class="tcard big" data-tilt>
+        <div class="himg"><img src="assets/calculator.webp" alt="Electronic calculator"></div>
+        <div class="hbody">
+          <span class="era">The electronic calculator</span>
+          <h4>Mathematicians, no longer needed?</h4>
+          <p class="fear">The worry: mathematical skills would become less important.</p>
+          <p class="then">What happened: calculators reduced repetitive calculations and helped people focus on more complex problems.</p>
+        </div>
+      </article>
+    </div>
+  </div>
+  <div class="notes" hidden><p>Now, a lot of people ask: “Will AI replace doctors and take over medicine completely?”</p><p>Whenever new technology arrives, people worry about their jobs. History gives us some useful examples.</p><p>When electronic calculators became available, people worried that mathematical skills would become less important. But calculators didn’t eliminate mathematicians. They reduced repetitive calculations and helped people focus on more complex problems.</p><p>The same idea applies to healthcare. Automating routine tasks can give doctors more time for careful decisions and personal care.</p><p>Next: another example and our conclusion.</p><p class="handoff">→ Hand over to the next speaker</p></div>
+</section>
+
+<!-- 8 · CAMERA & COMPUTERS -->
+<section class="slide center" data-title="Technology changes work" data-scene="tech">
+  <div class="content wide">
+    <p class="kicker rv"><span class="bar"></span>08 — More Examples<span class="bar"></span></p>
+    <h2 class="h sm">
+      <span class="ln"><span data-scramble>Technology changes</span></span>
+      <span class="ln acc"><span data-scramble>what we do.</span></span>
+    </h2>
+    <div class="pair rv">
+      <article class="tcard l" data-tilt>
+        <div class="himg"><img src="assets/camera.webp" alt="Antique camera"></div>
+        <div class="hbody">
+          <span class="era">Photography</span>
+          <h4>Painting found a new role</h4>
+          <p class="then">Artists continued to explore emotion, imagination, and different ways of seeing the world.</p>
+        </div>
+      </article>
+      <article class="tcard r" data-tilt>
+        <div class="himg"><img src="assets/tablet.webp" alt="Computer tablet"></div>
+        <div class="hbody">
+          <span class="era">Computers</span>
+          <h4>Offices transformed</h4>
+          <p class="then">They changed many jobs and created new kinds of work.</p>
+        </div>
+      </article>
+    </div>
+    <p class="banner rv">Technology can change <span>what people do and how they use their skills.</span></p>
+  </div>
+  <div class="notes" hidden><p>When photography became widespread, it changed the role of painting. Artists continued to explore emotion, imagination, and different ways of seeing the world.</p><p>Similarly, when computers entered offices, they changed many jobs and created new kinds of work.</p><p>These examples show that technology can change what people do and how they use their skills.</p></div>
+</section>
+
+<!-- 9 · EMPATHY & CORE IDEA -->
+<section class="slide center" data-title="The core idea" data-scene="core">
+  <div class="content wide">
+    <p class="kicker rv"><span class="bar"></span>09 — The Human Line<span class="bar"></span></p>
+    <p class="empathy rv"><b>AI cannot feel empathy.</b> It cannot hold a patient’s hand or offer the human presence that matters when someone receives difficult news.</p>
+    <div class="core">
+      <span class="ln"><span><em class="m">Machine speed</em> handles the data.</span></span>
+      <span class="ln"><span><em class="hc">Human empathy</em> handles the care.</span></span>
+    </div>
+    <div class="roles rv">
+      <div class="role doc"><span class="lbl">Doctors bring</span><b>Judgment · Responsibility · Compassion</b></div>
+      <div class="role ai"><span class="lbl">AI supports</span><b>Processing information</b></div>
+    </div>
+    <p class="lead rv mid">The goal of AI in medicine is to <b>make more time for human care.</b></p>
+  </div>
+  <div class="notes" hidden><p>AI cannot feel empathy. It cannot hold a patient’s hand or offer the human presence that matters when someone receives difficult news.</p><p>The goal of AI in medicine is to make more time for human care.</p><p>Our core idea is simple: machine speed handles the data, and human empathy handles the care.</p><p>Doctors bring judgment, responsibility, and compassion. AI can support their work by helping them process information.</p></div>
+</section>
+
+<!-- 10 · CONCLUSION -->
+<section class="slide center" data-title="Thank you · Q&amp;A" data-scene="finale">
+  <div class="content wide">
+    <p class="kicker rv"><span class="bar"></span>Conclusion<span class="bar"></span></p>
+    <div class="chips rv">
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-6-5.5-6-11a6 6 0 0 1 12 0c0 5.5-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>Locating someone during an emergency call</span>
+      <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/></svg>Helping a doctor review a scan</span>
+    </div>
+    <p class="sub rv">AI can reduce delays and support better care.</p>
+    <h2 class="h xxl">
+      <span class="ln"><span data-scramble>Thank you.</span></span>
+    </h2>
+    <p class="lead rv mid big">Every second counts. <b>Technology can help us use those seconds more effectively, so people can focus on saving lives.</b></p>
+    <div class="qa rv"><span class="live"><i></i>Q&amp;A</span>We’re happy to take your questions.</div>
+  </div>
+  <div class="notes" hidden><p>Whether it’s helping locate someone during an emergency call or helping a doctor review a scan, AI can reduce delays and support better care.</p><p>Every second counts. Technology can help us use those seconds more effectively, so people can focus on saving lives.</p><p>Thank you for listening. We’re happy to take your questions.</p></div>
+</section>
+
+</main>
+
+<script src="vendor/three.min.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
