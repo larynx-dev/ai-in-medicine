@@ -570,10 +570,18 @@ function scramble(el,dur=950,glyphs=GLYPHS){
   const fin=el.dataset.final??(el.dataset.final=el.textContent);
   cancelAnimationFrame(el._sr);
   if(REDUCED){el.textContent=fin;return}
+  // Headlines: freeze the box at the final text's size while decoding, so wider random glyphs
+  // can't wrap the line and push the content below up and down (the "stutter" on long headlines).
+  const lock=el.hasAttribute('data-scramble'),unlock=()=>{el.style.width=el.style.height=el.style.whiteSpace=''};
+  if(lock){unlock();el.textContent=fin;const {width:w,height:h}=el.getBoundingClientRect(); // fractional; translateY doesn't alter size
+    el.style.width=w+'px';el.style.height=h+'px';el.style.whiteSpace='nowrap'}
+  const az=/[a-z]/,keep=/[^A-Za-z0-9]/; // keep spaces/punctuation, lowercase glyphs for lowercase letters (closer widths)
   const n=fin.length,rev=[...fin].map((_,i)=>(i/n)*dur*.55+Math.random()*dur*.45),t0=performance.now();
   const step=now=>{const tt=now-t0;let out='',done=true;
-    for(let i=0;i<n;i++){const ch=fin[i];if(ch===' '||tt>=rev[i])out+=ch;else{done=false;out+=glyphs[Math.random()*glyphs.length|0]}}
-    el.textContent=out;if(!done)el._sr=requestAnimationFrame(step)};
+    for(let i=0;i<n;i++){const ch=fin[i];
+      if(keep.test(ch)||tt>=rev[i])out+=ch;
+      else{done=false;const g=glyphs[Math.random()*glyphs.length|0];out+=az.test(ch)?g.toLowerCase():g}}
+    el.textContent=out;if(!done)el._sr=requestAnimationFrame(step);else if(lock)unlock()};
   el._sr=requestAnimationFrame(step);
 }
 

@@ -107,7 +107,7 @@ img{user-select:none;-webkit-user-drag:none}
 .slide.is-active,.slide.is-leaving{visibility:visible}
 .slide.is-active{pointer-events:auto}
 .slide.center{justify-content:center;text-align:center}
-.content{position:relative;max-width:min(640px,46vw);width:100%}
+.content{position:relative;max-width:min(680px,46vw);width:100%}
 .content.wide{max-width:min(1180px,92vw)}
 
 .kicker{display:flex;align-items:center;gap:12px;margin:0 0 18px;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
